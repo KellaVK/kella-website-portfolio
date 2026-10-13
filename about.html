@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About – Kella Kruebbe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#111; --bg-alt:#171717; --panel:#1a1a1a; --text:#eee; --muted:#bcbcbc; --accent:#d4af37; --border:#222;
+      --header-h:80px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text)}
+    a{color:var(--accent); text-decoration:none}
+
+    /* Header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:var(--header-h);
+      background:rgba(0,0,0,.85); backdrop-filter:blur(5px);
+      border-bottom:1px solid var(--border); z-index:1000;
+      display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem;
+    }
+    .brand{display:flex; align-items:center; gap:12px}
+    .brand img{max-height:40px; width:auto; display:block}
+    nav a{color:#ccc; margin-left:1.5rem}
+    nav a:hover{color:var(--accent)}
+    nav a.active{color:var(--accent); font-weight:600; border-bottom:2px solid var(--accent)}
+
+    /* Split Hero/About */
+    .about-wrap{
+      margin-top:var(--header-h);
+      min-height:calc(100vh - var(--header-h));
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .about-img{
+      background:url('images/kella-headshot.jpg') center/cover no-repeat;
+      min-height:60vh;
+    }
+    .about-copy{
+      display:flex; align-items:center; justify-content:flex-end;
+      background:var(--bg);
+      padding:60px 40px;
+    }
+    .about-inner{
+      max-width:560px;
+      text-align:center;
+      font-family:'Playfair Display',serif;
+      line-height:1.65;
+    }
+
+    /* Optional section separators (alternating backgrounds) */
+    .section{padding:80px 20px; border-top:1px solid var(--border)}
+    .section.alt{background:var(--bg-alt)}
+    .section h2{font-family:'Playfair Display',serif; margin:0 0 1rem}
+    .services-list{
+      list-style:none; padding:0; margin:0;
+      display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    }
+    blockquote{
+      font-style:italic; margin:0; padding-left:1rem; border-left:3px solid var(--accent); color:#e6e6e6;
+    }
+
+    footer{ text-align:center; padding:32px 20px; color:#777; border-top:1px solid var(--border); }
+
+    .form-logo img {
+      width:100%;
+      max-width: 300px;
+      height:100%;
+      max-height: 222px;
+      display:block;
+      margin-left: auto;
+      margin-right: auto;
+
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .about-wrap{ grid-template-columns:1fr; }
+      .about-img{ order:-1; height:50vh; }
+      .about-copy{ justify-content:center; padding:48px 24px; }
+      .about-inner{ text-align:left; }
+    }
+
+     .cta-button {
+      padding: 0.75rem 1.5rem;
+
+      border: 3px solid #d4af37;
+      color: #d4af37;
+      font-size: 1.5rem;
+      background: rgba(0, 0, 0, 0.50);
+      transition: background 0.3s, color 0.3s;
+    }
+    .cta-button:hover {
+      background: rgba(250, 0, 0, 0.50);
+      /* color: #111; */
+      /* border: 3px solid #111; */
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+   <div class="brand">
+  <a href="index.html">
+    <img src="images/Kella-Logo_White.png" alt="Kella Kruebbe Logo">
+  </a>
+</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Split About -->
+  <main>
+    <section class="about-wrap">
+      <div class="about-img" role="img" aria-label="Portrait of Kella Kruebbe"></div>
+      <div class="about-copy">
+        <div class="about-inner">
+           <div class="form-logo">
+            <img src="images/Kella-Logo_White.png" alt="Kella Kruebbe Logo">
+          </div>
+          <p>Kella Kruebbe is a young magician out of New Orleans, Louisiana that has been performing magic since before his first memories solidified. Over the years he has had the privilege of studying under some of the greatest minds in magic,
+             including David Blaine, Michael Carbonaro, Mac King, Mike Caveney, Michael Dardant, Neil Baum, and more. </p>
+          <p><span style="color: #d4af37;">Kella performs mind-blowing magic for private <span style="color: plum;">rendezvous'</span> all over the capital of <span style="color: plum;">voodoo</span>, extracting deafening <span style="color: plum;"><em>woohoo’s</em></span> from crowds of all ages.</span> </p>
+          <p>In the event YOUR EVENT needs a bit of flair that people WILL talk about, do not risk the lifelong regret of missing his exhibition of the mystical arts. </p>
+          <br>
+          <a class="cta-button" href="contact.html">Book a Show</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPTIONAL: Services (uncomment if you want on About page) -->
+    <!--
+    <section class="section alt">
+      <h2>Services</h2>
+      <ul class="services-list">
+        <li>Private Events</li>
+        <li>Corporate Events</li>
+        <li>Weddings</li>
+        <li>Charity Events</li>
+        <li>Walkaround Magic</li>
+        <li>Custom Set Performances</li>
+      </ul>
+    </section>
+    -->
+
+    <!-- OPTIONAL: Testimonials (uncomment if you want on About page) -->
+    <!--
+    <section class="section">
+      <h2>Testimonials</h2>
+      <blockquote>
+        “An unforgettable experience. The entire room was captivated.”<br>— Client Name, Event Type
+      </blockquote>
+    </section>
+    -->
+  </main>
+
+  <footer>© 2025 Kella Kruebbe. All rights reserved.</footer>
+</body>
+</html>

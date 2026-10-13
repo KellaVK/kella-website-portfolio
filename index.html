@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kella Kruebbe – Magician</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    :root{
+      --bg:#111; --text:#eee; --muted:#cfcfcf; --accent:#d4af37; --border:#222;
+      --header-h:80px;
+      --spacer:clamp(48px, 8vh, 120px);
+      --about-gap: 2rem;           /* controls spacing between photo & text */
+      --parallax: 0px;             /* updated by JS */
+      --fade-speed: 3s; /* adjust this for faster/slower fade-in */
+    }
+
+    html, body { overscroll-behavior: none; } /* prevent rubber-band scroll above top */
+    body{
+      margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text);
+      scroll-behavior:smooth; padding-top:var(--header-h);
+    }
+
+    /* anchor targets land fully below the fixed header */
+    [id]{ scroll-margin-top: calc(var(--header-h)); }
+
+    a{ color:#d4af37; text-decoration:none; }
+
+    /* Header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:var(--header-h);
+      background:rgba(0,0,0,.85); backdrop-filter:blur(5px);
+      border-bottom:1px solid #222; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem;
+    }
+    .brand img{ max-height:40px; width:auto; display:block; }
+    nav a{ margin-left:1.5rem; color:#ccc; font-weight:400; transition:color .3s; }
+    nav a:hover{ color:#d4af37; }
+    nav a.active{ color:#d4af37; font-weight:bold; border-bottom:2px solid #d4af37; }
+
+    /* HERO – parallax via ::before layer */
+    #hero{
+      position:relative;
+      height:100vh;
+      margin-top: 0; /* keep your current tweak */
+      color:#fff;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      text-align:center; font-family:'Playfair Display',serif;
+      overflow:hidden;
+    }
+    #hero::before{
+      content:"";
+      position:absolute; inset:-8vh 0 -8vh 0; /* extra bleed for drift */
+      background-image:url('images/option_1.jpg');
+      background-size:cover; background-repeat:no-repeat; background-position:70% center;
+      transform: translateY(var(--parallax));
+      will-change: transform;
+      z-index:-1;
+    }
+    @media (max-width:900px){ #hero::before{ background-position:center 30%; } }
+
+    #hero h1{
+      font-size:4rem; margin-bottom:.5rem; letter-spacing:2px; color: white; text-shadow:2px 2px 5px #111;
+    }
+    #hero h2{
+      font-size:1.5rem; max-width:500px; font-weight:300; color: white; text-shadow:2px 2px 5px black; margin-bottom:2rem;
+    }
+    .cta-button{
+      padding:.75rem 1.5rem; border:3px solid #d4af37; color:#d4af37; font-size:1.5rem;
+      background:rgba(0,0,0,.50); transition:background .3s, color .3s;
+    }
+    .cta-button:hover{ background:rgba(250,0,0,.50); }
+
+    /* Transition spacer */
+    .section-spacer{ height:var(--spacer); background:#111; }
+
+    /* ABOUT */
+    #about{}
+    .about-wrap{
+      min-height:calc(100vh - 0px);
+      display:grid; grid-template-columns:1fr 1fr;
+      gap: var(--about-gap);                    /* column gap */
+      opacity:0; transform: translateY(18px);   /* fade-in initial */
+      transition: opacity var(--fade-speed) ease, transform var(--fade-speed) ease;
+    }
+    .about-wrap.is-visible{ opacity:1; transform: none; }
+
+    .about-img{
+      background:url('images/kella-headshot.jpg') center/cover no-repeat;
+      min-height:60vh;
+      margin-left: var(--about-gap);            /* left margin matches column gap */
+    }
+    .about-copy{
+      display:flex; align-items:center; justify-content:flex-end;
+      background:#111; padding:60px 40px;
+    }
+    .about-inner{
+      max-width:560px; text-align:center;
+      font-family:'Playfair Display',serif; line-height:1.65;
+    }
+
+    .form-logo img{
+      width:100%; max-width:300px; height:100%; max-height:222px;
+      display:block; margin-left:auto; margin-right:auto;
+    }
+
+    .cta-button.inline{
+      margin-top:14px; display:inline-block; border-width:2px; font-size:1.1rem;
+      padding:.6rem 1.2rem;
+    }
+
+    /* Contact Section */
+    /* Contact Section Variables */
+  #contact {
+    --bg: #111;
+    --bg-alt: #1a1a1a;
+    --text: #eee;
+    --muted: #bbb;
+    --accent: #d4af37;
+    --border: #333;
+    --reel-height: 280px;
+    --reel-gap: 16px;
+    --reel-speed: 30s;
+  }
+
+  /* Layout & container */
+  #contact {
+    background: var(--bg);
+    color: var(--text);
+    padding: 80px 80px;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity var(--fade-speed) ease, transform var(--fade-speed) ease;
+  }
+
+  #contact.is-visible {
+  opacity: 1;
+  transform: none;
+  }
+
+  #contact main {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  #contact h2 {
+    font-family: 'Playfair Display', serif;
+    margin: 16px 0 1.25rem;
+    letter-spacing: 0.5px;
+  }
+  #contact p.lead {
+    color: var(--muted);
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+
+  /* Form */
+  #contact form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.25rem;
+    background: var(--bg-alt);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+  #contact form .full {
+    grid-column: 1 / -1;
+  }
+  #contact form label {
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+  #contact form input,
+  #contact form select,
+  #contact form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    color: var(--text);
+    font-size: 1rem;
+  }
+  #contact form input:focus,
+  #contact form select:focus,
+  #contact form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.15);
+  }
+
+  /* Actions row */
+  #contact .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  #contact button[type="submit"] {
+    padding: 0.9rem 1.4rem;
+    border: 1px solid var(--accent);
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--accent);
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s;
+  }
+  #contact button[type="submit"]:hover {
+    background: var(--accent);
+    color: #111;
+  }
+  #contact .note {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  #contact .status {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+  #contact .success {
+    color: #9ae6b4;
+  }
+  #contact .error {
+    color: #f7a6a6;
+  }
+
+  /* Reel container */
+  #contact .reel {
+    position: relative;
+    overflow: hidden;
+    margin: 80px auto 0px;
+    max-width: 1100px;
+    height: var(--reel-height);
+  }
+  #contact .reel::before,
+  #contact .reel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 90px;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  #contact .reel::before {
+    left: 0;
+    background: linear-gradient(to right, #111, rgba(17, 17, 17, 0));
+  }
+  #contact .reel::after {
+    right: 0;
+    background: linear-gradient(to left, #111, rgba(17, 17, 17, 0));
+  }
+  #contact .reel__track {
+    display: flex;
+    align-items: center;
+    gap: var(--reel-gap);
+    height: 100%;
+    animation: reel-scroll var(--reel-speed) linear infinite;
+  }
+  #contact .reel img {
+    height: 100%;
+    width: auto;
+    flex: 0 0 auto;
+    display: block;
+    border-radius: 6px;
+    filter: saturate(0.85) contrast(1.05);
+  }
+  #contact .reel:hover .reel__track {
+    animation-play-state: paused;
+  }
+  @keyframes reel-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    #contact form {
+      grid-template-columns: 1fr;
+    }
+    #contact .reel {
+      margin-left: 12px;
+      margin-right: 12px;
+    }
+  }
+
+    /* Footer */
+    footer{ text-align:center; padding:2rem; font-size:.9rem; color:#666; border-top:1px solid #222; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      #hero::before{ transform:none !important; }
+      html, body { scroll-behavior: auto; }
+    }
+
+    /* Responsive */
+    @media (max-width:900px){
+      .about-wrap{ grid-template-columns:1fr; }
+      .about-img{ order:-1; height:50vh; margin-left: 0; } /* remove extra left margin on mobile */
+      .about-copy{ justify-content:center; padding:48px 24px; }
+      .about-inner{ text-align:left; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <a href="#hero" id="logoHome"><img src="images/Kella-Logo_White.png" alt="Kella Kruebbe Logo"></a>
+    </div>
+    <nav>
+      <a href="#hero" class="active" id="navHome">Home</a>
+      <a href="#about" id="navAbout">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="#contact" id="navContact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Hero">
+    <h1>How does he do it? </h1>
+    <h2>I don't know, I just made his website</h2>
+    <span><h2> </h2><h2></h2></span>
+    <a id="indexContact" class="cta-button" href="#contact">Book a Show</a>
+  </section>
+
+  <!-- Spacer between HERO and ABOUT -->
+  <div class="section-spacer"></div>
+
+  <!-- ABOUT -->
+  <section id="about" aria-label="About Kella">
+    <div class="about-wrap">
+      <div class="about-img" role="img" aria-label="Portrait of Kella Kruebbe"></div>
+      <div class="about-copy">
+        <div class="about-inner">
+          <div class="form-logo">
+            <img src="images/Kella-Logo_White.png" alt="Kella Kruebbe Logo">
+          </div>
+          <p>Kella Kruebbe is a young magician out of New Orleans, Louisiana that has been performing magic since before his first memories solidified. Over the years he has had the privilege of studying under some of the greatest minds in magic,
+             including David Blaine, Michael Carbonaro, Mac King, Mike Caveney, Michael Dardant, Neil Baum, and more. </p>
+          <p><span style="color: #d4af37;">Kella performs mind-blowing magic for private <span style="color: plum;">rendezvous'</span> all over the capital of <span style="color: plum;">voodoo</span>, extracting deafening <span style="color: plum;"><em>woohoo’s</em></span> from crowds of all ages.</span> </p>
+          <p>In the event YOUR EVENT needs a bit of flair that people WILL talk about, do not risk the lifelong regret of missing his exhibition of the mystical arts. </p>
+          <a class="cta-button inline" href="#contact" id="aboutContact">Book a Show</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spacer after ABOUT to allow perfect top alignment under the nav when anchored -->
+  <!-- <div class="section-spacer"></div> -->
+
+  <!-- Contact -->
+  <section id="contact" aria-label="Contact & Booking">
+
+    <main>
+    <h2>Contact & Booking</h2>
+    <p class="lead">Tell me a little about your event and the kind of performance you’re looking for. I’ll get back to you promptly.</p>
+
+    <form id="contactForm" action="https://formspree.io/f/your-id-here" method="POST" autocomplete="on" novalidate>
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div>
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required placeholder="Jane Doe">
+      </div>
+      <div>
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="(555) 123-4567">
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="you@example.com">
+      </div>
+      <div>
+        <label for="performance">Performance Type</label>
+        <select id="performance" name="performance" required>
+          <option value="" disabled selected>Select one…</option>
+          <option>Private Event</option>
+          <option>Corporate Event</option>
+          <option>Wedding</option>
+          <option>Charity Event</option>
+          <option>Walkaround / Strolling</option>
+          <option>Custom Set Performance</option>
+        </select>
+      </div>
+      <div class="full">
+        <label for="message">Additional Details</label>
+        <textarea id="message" name="message" rows="6" placeholder="Date, location, audience size, run time, or anything else I should know…" required></textarea>
+      </div>
+      <div class="actions full">
+        <button type="submit">Send Inquiry</button>
+        <span class="note">Or email directly: <a href="mailto:booking@kellakruebbe.com">booking@kellakruebbe.com</a></span>
+      </div>
+    </form>
+
+    <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+  </main>
+ <!-- Scrolling photo reel -->
+  <div class="reel" aria-label="Event photos">
+    <div class="reel__track">
+      <img src="images/reel1.jpg" alt="Event photo 1">
+      <img src="images/reel2.jpg" alt="Event photo 2">
+      <img src="images/reel3.jpeg" alt="Event photo 3">
+      <img src="images/reel4.jpeg" alt="Event photo 4">
+      <img src="images/reel5.jpeg" alt="Event photo 5">
+      <img src="images/reel6.jpeg" alt="Event photo 6">
+      <img src="images/reel1.jpg" alt="Event photo 1">
+      <img src="images/reel2.jpg" alt="Event photo 2">
+      <img src="images/reel3.jpeg" alt="Event photo 3">
+      <img src="images/reel4.jpeg" alt="Event photo 4">
+      <img src="images/reel5.jpeg" alt="Event photo 5">
+      <img src="images/reel6.jpeg" alt="Event photo 6">
+    </div>
+  </div>
+</section>
+
+  <footer>© 2025 Kella Kruebbe. All rights reserved.</footer>
+
+  <script src="assets/js/index.js"></script>
+
+</body>
+</html>

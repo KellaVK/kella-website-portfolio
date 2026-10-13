@@ -1,0 +1,1 @@
+HTML pages use KellaVK/Magic-Website commit e30d653. Images were recovered from the local website folder because the upstream repository did not include them. Other local pages remain at their original paths.

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – Kella Kruebbe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #111;
+      --bg-alt: #1a1a1a;
+      --text: #eee;
+      --muted: #bbb;
+      --accent: #d4af37;
+      --border: #333;
+      /* Reel controls */
+      --reel-height: 180px;   /* adjust to taste */
+      --reel-gap: 16px;
+      --reel-speed: 110s;     /* bigger = slower */
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 1000; border-bottom: 1px solid #222;
+    }
+    .brand { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; color: #fff; }
+
+    .brand img {
+      max-height: 40px; /* keep inside bar height */
+      width: auto;
+      display: block;
+    }
+
+    nav a { margin-left: 1.5rem; color: #ccc; transition: color 0.3s; }
+    nav a:hover { color: var(--accent); }
+    nav a.active {
+      color: #d4af37;
+      font-weight: bold;
+      border-bottom: 2px solid #d4af37;
+    }
+
+    /* Header image space */
+    .header-image { width: 100%; height: 420px; background: url('images/contact-header.jpg') center/cover no-repeat; margin-top: 80px; }
+
+    /* Scrolling reel */
+    .reel {
+      position: relative;
+      overflow: hidden;
+      margin: 32px auto 10px;
+      max-width: 1100px;
+      height: var(--reel-height);
+    }
+    .reel::before, .reel::after {
+      content: ""; position: absolute; top: 0; width: 90px; height: 100%; z-index: 1; pointer-events: none;
+    }
+    .reel::before { left: 0; background: linear-gradient(to right, #111, rgba(17,17,17,0)); }
+    .reel::after  { right: 0; background: linear-gradient(to left,  #111, rgba(17,17,17,0)); }
+    .reel__track {
+      display: flex; align-items: center; gap: var(--reel-gap); height: 100%;
+      animation: reel-scroll var(--reel-speed) linear infinite;
+    }
+    .reel img { height: 100%; width: auto; flex: 0 0 auto; display: block; border-radius: 6px; filter: saturate(0.85) contrast(1.05); }
+    @keyframes reel-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .reel:hover .reel__track { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) { .reel__track { animation: none; } }
+
+    main { padding: 80px 20px 80px; max-width: 860px; margin: 0 auto; }
+    h2 { font-family: 'Playfair Display', serif; margin: 16px 0 1.25rem; letter-spacing: 0.5px; }
+    p.lead { color: var(--muted); margin-top: 0; }
+
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; background: var(--bg-alt); padding: 1.5rem; border: 1px solid var(--border); }
+    .full { grid-column: 1 / -1; }
+    label { font-size: 0.9rem; color: var(--muted); display: block; margin-bottom: 0.35rem; }
+    input, select, textarea { width: 100%; padding: 0.8rem; background: #1e1e1e; border: 1px solid #444; color: var(--text); font-size: 1rem; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(212,175,55,0.15); }
+
+    .actions { display: flex; align-items: center; gap: 1rem; }
+    button[type="submit"] { padding: 0.9rem 1.4rem; border: 1px solid var(--accent); background: rgba(212,175,55,0.15); color: var(--accent); cursor: pointer; transition: background 0.25s, color 0.25s; }
+    button[type="submit"]:hover { background: var(--accent); color: #111; }
+
+    .note { font-size: 0.85rem; color: var(--muted); }
+    .status { margin-top: 1rem; font-size: 0.95rem; }
+    .success { color: #9ae6b4; }
+    .error { color: #f7a6a6; }
+
+    footer { text-align: center; padding: 2rem; font-size: 0.9rem; color: #666; }
+
+    @media (max-width: 720px) {
+      form { grid-template-columns: 1fr; }
+      .header-image { height: 300px; }
+      .reel { margin-left: 12px; margin-right: 12px; }
+    }
+
+
+  </style>
+</head>
+<body>
+  <header>
+  <div class="brand">
+  <a href="index.html">
+    <img src="images/Kella-Logo_White.png" alt="Kella Kruebbe Logo">
+  </a>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html" >About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+</header>
+
+  <main>
+    <div></div>
+
+
+    <h2>Contact & Booking</h2>
+    <p class="lead">Tell me a little about your event and the kind of performance you’re looking for. I’ll get back to you promptly.</p>
+
+    <!-- OPTION A: Formspree (recommended for static hosting). Replace ACTION URL with your Formspree endpoint. -->
+    <form id="contactForm" action="https://formspree.io/f/mpwzqrnq" method="POST" autocomplete="on" novalidate>
+      <!-- Honeypot to deter bots -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div>
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required placeholder="Jane Doe">
+      </div>
+
+      <div>
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="(555) 123-4567">
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="you@example.com">
+      </div>
+
+      <div>
+        <label for="performance">Performance Type</label>
+        <select id="performance" name="performance" required>
+          <option value="" disabled selected>Select one…</option>
+          <option>Private Event</option>
+          <option>Corporate Event</option>
+          <option>Wedding</option>
+          <option>Charity Event</option>
+          <option>Walkaround / Strolling</option>
+          <option>Custom Set Performance</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label for="message">Additional Details</label>
+        <textarea id="message" name="message" rows="6" placeholder="Date, location, audience size, run time, or anything else I should know…" required></textarea>
+      </div>
+
+      <div class="actions full">
+        <button type="submit">Send Inquiry</button>
+        <span class="note">Or email directly: <a href="mailto:booking@kellakruebbe.com">booking@kellakruebbe.com</a></span>
+      </div>
+
+      <!-- Formspree: optional redirect
+      <input type="hidden" name="_redirect" value="/thank-you.html"> -->
+    </form>
+
+    <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+  </main>
+
+    <!-- Scrolling photo reel: replace file names with your own; duplicate set for seamless loop -->
+  <div class="reel" aria-label="Event photos">
+    <div class="reel__track">
+      <!-- Set 1 -->
+      <img src="images/reel1.jpg" alt="Event photo 1">
+      <img src="images/reel2.jpg" alt="Event photo 2">
+      <img src="images/reel3.jpeg" alt="Event photo 3">
+      <img src="images/reel4.jpeg" alt="Event photo 4">
+      <img src="images/reel5.jpeg" alt="Event photo 5">
+      <img src="images/reel6.jpeg" alt="Event photo 6">
+      <!-- Set 2 (duplicate) -->
+      <img src="images/reel1.jpg" alt="Event photo 1">
+      <img src="images/reel2.jpg" alt="Event photo 2">
+      <img src="images/reel3.jpeg" alt="Event photo 3">
+      <img src="images/reel4.jpeg" alt="Event photo 4">
+      <img src="images/reel5.jpeg" alt="Event photo 5">
+      <img src="images/reel6.jpeg" alt="Event photo 6">
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Kella Kruebbe. All rights reserved.
+  </footer>
+
+  <script>
+    // Progressive enhancement: AJAX post so the user stays on the page
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic client-side validation
+      if (!form.checkValidity()) {
+        statusEl.textContent = 'Please complete the required fields.';
+        statusEl.className = 'status error';
+        return;
+      }
+
+      const data = new FormData(form);
+      try {
+        const resp = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        if (resp.ok) {
+          form.reset();
+          statusEl.textContent = 'Thanks — your message has been sent.';
+          statusEl.className = 'status success';
+        } else {
+          const json = await resp.json().catch(() => ({}));
+          statusEl.textContent = json.error || 'Something went wrong. Please try again or email me directly.';
+          statusEl.className = 'status error';
+        }
+      } catch (err) {
+        statusEl.textContent = 'Network error. Please try again later or email me directly.';
+        statusEl.className = 'status error';
+      }
+    });
+  </script>
+
+
+
+</body>
+</html>

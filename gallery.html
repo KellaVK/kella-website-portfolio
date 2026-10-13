@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery – Kella Kruebbe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#111; --bg-alt:#151515; --panel:#1a1a1a; --text:#eee; --muted:#bdbdbd; --accent:#d4af37; --border:#2b2b2b;
+      --header-h:80px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif;
+      padding-top:var(--header-h); /* header offset */
+    }
+    a{color:var(--accent); text-decoration:none}
+    [id]{scroll-margin-top:calc(var(--header-h) + 16px)}
+
+    /* Header / Nav */
+    header{
+      position:fixed; inset:0 0 auto 0; height:var(--header-h);
+      background:rgba(0,0,0,.85); backdrop-filter:blur(5px);
+      border-bottom:1px solid #222; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem;
+    }
+    .brand{display:flex; align-items:center; gap:12px}
+    .brand img{max-height:40px; width:auto; display:block}
+    nav a{margin-left:1.5rem; color:#ccc; transition:color .25s}
+    nav a:hover{color:var(--accent)}
+    nav a.active{color:var(--accent); font-weight:600; border-bottom:2px solid var(--accent)}
+
+    /* Intro (centered) */
+    .intro{
+      max-width:1200px; margin:0 auto; padding:32px 20px 12px;
+      text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    }
+    .intro h1{
+      font-family:'Playfair Display',serif; font-size:2.2rem; margin:0 0 10px;
+    }
+    .intro p{ color:var(--muted); margin:0; max-width:640px; }
+
+    /* Filters */
+    .filters{
+      max-width:1200px; margin:14px auto 8px; padding:0 20px;
+      display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+    }
+    .filter-btn{
+      border:1px solid var(--border); background:var(--panel); color:#ddd;
+      padding:.5rem .9rem; cursor:pointer; font-size:.95rem;
+      transition:border-color .2s,color .2s,background .2s;
+    }
+    .filter-btn:hover,
+    .filter-btn[aria-pressed="true"]{border-color:var(--accent); color:var(--accent)}
+
+    /* Masonry grid */
+    .gallery{max-width:1200px; margin:10px auto 60px; padding:0 20px}
+    .masonry{column-count:1; column-gap:16px}
+    @media(min-width:600px){.masonry{column-count:2}}
+    @media(min-width:900px){.masonry{column-count:3}}
+    @media(min-width:1200px){.masonry{column-count:4}}
+
+    .item{break-inside:avoid; margin:0 0 16px; background:var(--bg-alt); border:1px solid var(--border)}
+    .item figure{margin:0; position:relative; cursor:zoom-in}
+    .item img{display:block; width:100%; height:auto}
+    .item figcaption{
+      position:absolute; left:0; right:0; bottom:0;
+      background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,0));
+      color:#eee; padding:24px 12px 10px; font-size:.9rem;
+      opacity:0; transition:opacity .25s;
+    }
+    .item:hover figcaption{opacity:1}
+
+    /* Lightbox */
+    .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.92); display:none; align-items:center; justify-content:center; z-index:2000}
+    .lightbox[open]{display:flex}
+    .lb-inner{max-width:min(92vw,1400px); max-height:86vh; position:relative; display:flex; flex-direction:column; align-items:center}
+    .lb-img, .lb-video{max-width:100%; max-height:86vh; display:block; background:#000}
+    .lb-caption{margin-top:10px; color:#ddd; font-size:.95rem; text-align:center}
+    .lb-close,.lb-prev,.lb-next{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(0,0,0,.5); border:1px solid var(--border); color:#eee; padding:.6rem .8rem; cursor:pointer
+    }
+    .lb-close{top:12px; right:12px; transform:none}
+    .lb-prev{left:-56px}
+    .lb-next{right:-56px}
+    @media(max-width:720px){.lb-prev{left:8px} .lb-next{right:8px}}
+    .lb-prev:hover,.lb-next:hover,.lb-close:hover{border-color:var(--accent); color:var(--accent)}
+
+    footer{text-align:center; padding:34px 20px; border-top:1px solid var(--border); color:#7a7a7a}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+  <a href="index.html">
+    <img src="images/Kella-Logo_White.png" alt="Kella Kruebbe Logo">
+  </a>
+</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="gallery.html" class="active">Gallery</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="intro" aria-describedby="intro-desc">
+    <h1>Gallery</h1>
+    <p id="intro-desc">A curated selection from close‑up performances, stage shows, and private events. Click any image to view full‑screen.</p>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters" role="toolbar" aria-label="Filter photos">
+    <button class="filter-btn" data-filter="*" aria-pressed="true">All</button>
+
+    <button class="filter-btn" data-filter="corporate">Corporate</button>
+    <button class="filter-btn" data-filter="close-up">Close-Up</button>
+    <button class="filter-btn" data-filter="birthday">Birthday</button>
+    <button class="filter-btn" data-filter="stage">Stage</button>
+
+  </div>
+
+  <!-- Masonry Grid -->
+  <section class="gallery">
+    <div class="masonry" id="masonry">
+      <!-- IMAGE ITEMS (examples) -->
+      <article class="item" data-category="corporate">
+        <figure>
+          <img src="images/gallery1.jpeg" alt="Corporate Performance" loading="lazy">
+          <figcaption>Halloween Strolling Set • New Orleans</figcaption>
+        </figure>
+      </article>
+
+      <article class="item" data-category="close-up">
+        <figure>
+          <img src="images/gallery2.jpeg" alt="Coffee Shop Magic" loading="lazy">
+          <figcaption>Casual Magic • Coffee Shop</figcaption>
+        </figure>
+      </article>
+
+      <article class="item" data-category="corporate">
+        <figure>
+          <img src="images/gallery3.jpeg" alt="Corporate event" loading="lazy">
+          <figcaption>Corporate event • Costume Party</figcaption>
+        </figure>
+      </article>
+
+      <article class="item" data-category="birthday">
+        <figure>
+          <img src="images/gallery4.jpeg" alt="Birthday performance" loading="lazy">
+          <figcaption>Birthday Party</figcaption>
+        </figure>
+      </article>
+
+      <!-- VIDEO ITEM (replace with your files) -->
+      <article class="item" data-category="corporate">
+        <figure data-type="video" data-src="images/performance.mp4" data-poster="images/video-thumb.jpg">
+          <img src="images/video-thumb.png" alt="Performance video thumbnail" loading="lazy">
+          <figcaption>Cosmetic Surgery Social • Mentalism</figcaption>
+        </figure>
+      </article>
+
+      <!-- More images... -->
+      <article class="item" data-category="close-up">
+        <figure>
+          <img src="images/gallery5.jpeg" alt="Close‑up reactions" loading="lazy">
+          <figcaption>Private Event • Belize</figcaption>
+        </figure>
+      </article>
+      <article class="item" data-category="stage">
+        <figure>
+          <img src="images/gallery6.jpg" alt="Stage detail" loading="lazy">
+          <figcaption>"Opening for David Blaine" - My Mom</figcaption>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <dialog class="lightbox" id="lightbox" aria-label="Media viewer">
+    <div class="lb-inner">
+      <button class="lb-close" aria-label="Close" id="lbClose">✕</button>
+      <button class="lb-prev" aria-label="Previous" id="lbPrev">‹</button>
+      <img class="lb-img" id="lbImg" alt="Expanded gallery image">
+      <button class="lb-next" aria-label="Next" id="lbNext">›</button>
+      <div class="lb-caption" id="lbCaption"></div>
+    </div>
+  </dialog>
+
+  <footer>© 2025 Kella Kruebbe. All rights reserved.</footer>
+
+  <script src="assets/js/gallery.js"></script>
+</body>
+</html>
