@@ -20,3 +20,7 @@ Booking behavior uses the existing third-party integration. Validation does not 
 ## Development notes
 
 This is an organized source snapshot prepared in October 2026. Existing production deployments are independent of this repository. Keep local credentials and runtime data out of Git.
+
+## AI-use acknowledgment
+
+See [AI_USE.md](AI_USE.md) for development assistance, runtime AI use, and verification scope.
